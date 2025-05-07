@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para Naomi :3 JGR</title>
+  <link rel="icon" href="img/flowers.png" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Prompt', sans-serif;
+      text-align: center;
+      height: 100vh;
+      background: linear-gradient(-45deg, #e0f7fa, #ffffff, #d0f0ff, #f5faff);
+      background-size: 400% 400%;
+      animation: gradient 12s ease infinite;
+      position: relative;
+      overflow: hidden;
+      color: #01579b;
+      transition: opacity 0.8s ease;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .heartbeat-bg {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 180px;
+      background: rgba(0, 150, 255, 0.05);
+      border-radius: 50%;
+      animation: beat 2s infinite;
+      z-index: 0;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .greetings {
+      position: relative;
+      z-index: 1;
+      font-size: 3rem;
+      margin-top: 60px;
+      color: #0288d1;
+    }
+
+    .description {
+      margin: 20px auto;
+      font-size: 1.3rem;
+      z-index: 1;
+      position: relative;
+    }
+
+    .typewriter {
+      font-size: 1.2rem;
+      color: #0277bd;
+      margin-top: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid;
+      width: 0;
+      animation: typing 5s steps(40, end) forwards, blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .button {
+      margin-top: 40px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .button button {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      background-color: #4fc3f7;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    .button button:hover {
+      background-color: #0288d1;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .popup-letter {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
+      max-width: 350px;
+      z-index: 999;
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .popup-letter.active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .popup-letter p {
+      font-size: 1.1rem;
+      color: #0277bd;
+    }
+
+    .fade-out {
+      opacity: 0 !important;
+    }
+
+    /* Flores decorativas alrededor de la carta */
+    .flor {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: girar 4s linear infinite;
+    }
+
+    .flor1 { top: -15px; left: -15px; }
+    .flor2 { top: -15px; right: -15px; }
+    .flor3 { bottom: -15px; left: -15px; }
+    .flor4 { bottom: -15px; right: -15px; }
+
+    @keyframes girar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="heartbeat-bg"></div>
+
+  <div class="greetings">HOLA Naomi ♡</div>
+  <div class="description">
+    <span>Tengo un regalo especial para tiiii corazón de melón 💖</span><br>
+    <span>¡FELIZ DÍA DEL TÉCNICO EN ENFERMERÍA!</span>
+  </div>
+
+  <div class="typewriter">Tu vocación es sanar, pero tu sonrisa también cura.</div>
+
+  <div class="button">
+    <button onclick="mostrarCarta()">Pulsa aquí para tu regalo :3</button>
+  </div>
+
+  <!-- Carta con flores -->
+  <div class="popup-letter" id="cartaEmergente">
+    <div class="flor flor1">🌸</div>
+    <div class="flor flor2">🌼</div>
+    <div class="flor flor3">🌸</div>
+    <div class="flor flor4">🌼</div>
+    <p>Naomi, esta sorpresa es solo una pequeña muestra de lo mucho que te quiero(mas de lo que te imaginas), admiro y aprecio 🩺💙<br>¡Gracias por ser tu mi sol!</p>
+  </div>
+
+  <!-- Música de fondo -->
+  <audio id="miAudio" src="audio/musica.mp3"></audio>
+
+  <script>
+    function mostrarCarta() {
+      const carta = document.getElementById("cartaEmergente");
+      const audio = document.getElementById("miAudio");
+
+      carta.classList.add('active');
+      audio.play();
+
+      setTimeout(() => {
+        document.body.classList.add('fade-out');
+        window.location.href = "FLORES.html";
+      }, 7000); // 7 segundos
+    }
+  </script>
+</body>
+</html>
